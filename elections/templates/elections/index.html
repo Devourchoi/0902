@@ -1,0 +1,55 @@
+<!-- C\Code\mysite\elections\template\elections\index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>선거 후보</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td><B>큰번호</B></td>
+            <td><B>작은번호</B></td>
+            <td><B>세부항목</B></td>
+            <td><B>질문</B></td>
+        </tr>
+        </thead>
+        <!-- 이 부분이 바뀌었습니다 -->
+        <tbody>
+        {% for M1Question in m1questions %}
+        <tr>
+            <td> {{ M1Question.M1QBNum }} </td>
+            <td> {{ M1Question.M1QSNum }} </td>
+            <td> <a href="M1QDs/{{ M1Question.M1QD }}/">
+                {{ M1Question.M1QD }}</a>  </td>
+            <td> {{ M1Question.M1Q }}  </td>
+            <td>
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+                <form action="{% url 'vote' %}" method="post">
+                {% csrf_token %}
+
+
+                    <td><input type="radio" name="choice" value="One">
+                        <input type="radio" name="choice" value="Two">
+                        <input type="radio" name="choice" value="Three">
+                        <input type="radio" name="choice" value="Four">
+                        <input type="radio" name="choice" value="Five">
+                    </td>
+
+                    <input type="submit" value="Vote">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <!-- 여기까지 -->
+        <tbody>
+    </table>
+</body>
+
